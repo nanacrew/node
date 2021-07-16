@@ -65,6 +65,7 @@ var serverStateJsonConvert = function(response, stateCode, gameName, app_version
 var dungeonRankJsonConvert = function(response, stateCode, gameName, items) {
 	var state = 'stateCode';
 	var message = 'message';
+	console.log(`[NANACREW] API call dungeonRankJsonConvert!! ${new Date()}`);
 
 	switch (stateCode) {
 		case 200:
@@ -151,6 +152,8 @@ exports.setDungeonScore = function(request, response) {
 		body = body + data;
 	});
 	request.on('end', function() {
+		console.log(`[NANACREW] API call setDungeonScore.js(initRank) / ${new Date()}`);
+
 		var post = qs.parse(body);
 		var gameName = getGameName(post.type);
 		var nickname = post.nickname;
@@ -240,6 +243,8 @@ exports.getRank = function(request, response) {
 		body = body + data;
 	});
 	request.on('end', function() {
+		console.log(`[NANACREW] API call getRank.js(initRank) / ${new Date()}`);
+
 		var post = qs.parse(body);
 		var gameName = getGameName(post.type);
 		var uid = post.uid;
@@ -280,6 +285,8 @@ exports.getMyRank = function(request, response) {
 		body = body + data;
 	});
 	request.on('end', function() {
+		console.log(`[NANACREW] API call getMyRank.js(initRank) / ${new Date()}`);
+
 		var post = qs.parse(body);
 		var gameName = getGameName(post.type);
 		var uid = post.uid;
@@ -314,6 +321,7 @@ exports.getMyRank = function(request, response) {
 };
 
 exports.initRank = function(type) {
+	console.log(`[NANACREW] API call dungeon_info.js(initRank) / ${new Date()}`);
 	var dungeonClearQuery = `TRUNCATE ${type}`;
 	db.query(dungeonClearQuery, function(err, users) {
 		if (err)

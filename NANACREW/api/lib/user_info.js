@@ -126,6 +126,7 @@ var userInfoJsonConvert = function(response, stateCode, gameName, nickname, uid,
 
 // 게임별 서버 상태
 exports.getServerState = function(request, response) {
+
 	var body = '';
 	request.on('data', function(data) {
 		body = body + data;
@@ -135,6 +136,8 @@ exports.getServerState = function(request, response) {
 		var gameName = getGameName(post.type);
 		var query = `SELECT * FROM server_states WHERE game_name = ?`;
 		db.query(query, [gameName], function(err, states) {
+			console.log(`[NANACREW] API call user_info.js(getServerState) / ${new Date()}`);
+
 			if (err)
 				throw err;
 			serverStateJsonConvert(response, states[0].game_state, gameName, states[0].app_version);
@@ -143,6 +146,8 @@ exports.getServerState = function(request, response) {
 };
 
 exports.getServerTime = function(request, response) {
+	console.log(`[NANACREW] API call user_info.js(getServerTime) / ${new Date()}`);
+
 	var time = (Date.now() / 1000).toFixed(0);
 
 	serverStateJsonConvert(response, 200, '', '');
@@ -180,6 +185,8 @@ exports.setUserInfo = function(request, response, type) {
 		body = body + data;
 	});
 	request.on('end', function() {
+		console.log(`[NANACREW] API call user_info.js(setUserInfo) / ${new Date()}`);
+
 		var post = qs.parse(body);
 		var gameName = getGameName(post.type);
 		var nickname = post.nickname;
@@ -194,6 +201,8 @@ exports.setUserInfo = function(request, response, type) {
 		FROM ${gameName}_user
 		WHERE uid = ?`;
 		db.query(selectQuery, [uid], function(err, users) {
+			console.log(`[NANACREW] API call user_info.js(setUserInfo) / ${new Date()}`);
+
 			var query = '';
 			if (err)
 				throw err;
@@ -253,6 +262,8 @@ exports.updateNickname = function(request, response, type) {
 		body = body + data;
 	});
 	request.on('end', function() {
+		console.log(`[NANACREW] API call user_info.js(updateNickname) / ${new Date()}`);
+
 		var post = qs.parse(body);
 		var gameName = getGameName(post.type);
 		var nickname = post.nickname;
