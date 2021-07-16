@@ -186,7 +186,7 @@ exports.getPackageList = function(request, response) {
 		body = body + data;
 	});
 	request.on('end', function() {
-		console.log(`[NANACREW] API call shop_package_list.js(getPackageList) / ${new Date()}`);
+		console.log(`[NANACREW] API call shop_package_list.js(getPackageList!) / ${new Date()}`);
 		var post = qs.parse(body);
 		var gameName = getGameName(post.type);
 		var event_type = post.event_type;
